@@ -823,7 +823,7 @@ func (m *Mediafile) ObtainVframes() []string {
 
 func (m *Mediafile) ObtainVsync() []string {
 	if m.vsync != "" {
-		return []string{"-vsync", fmt.Sprintf("%s", m.vframes)}
+		return []string{"-vsync", fmt.Sprintf("%s", m.vsync)}
 	}
 	return nil
 }
@@ -1131,7 +1131,7 @@ func (m *Mediafile) ObtainSkipAudio() []string {
 
 func (m *Mediafile) ObtainStreamIds() []string {
 	if m.streamIds != nil && len(m.streamIds) != 0 {
-		result := []string{}
+		var result []string
 		for i, val := range m.streamIds {
 			result = append(result, []string{"-streamid", fmt.Sprintf("%d:%s", i, val)}...)
 		}
@@ -1167,7 +1167,7 @@ func (m *Mediafile) ObtainBframe() []string {
 
 func (m *Mediafile) ObtainTags() []string {
 	if m.tags != nil && len(m.tags) != 0 {
-		result := []string{}
+		var result []string
 		for key, val := range m.tags {
 			result = append(result, []string{"-metadata", fmt.Sprintf("%s=%s", key, val)}...)
 		}
