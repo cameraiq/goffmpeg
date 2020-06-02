@@ -17,6 +17,7 @@ type Mediafile struct {
 	videoMinBitrate       int
 	videoCodec            string
 	vframes               int
+	vsync                 string
 	frameRate             int
 	audioRate             int
 	maxKeyframe           int
@@ -51,7 +52,6 @@ type Mediafile struct {
 	outputPipeReader      *io.PipeReader
 	outputPipeWriter      *io.PipeWriter
 	movFlags              string
-	vsync                 string
 	hideBanner            bool
 	outputPath            string
 	outputFormat          string
@@ -126,6 +126,10 @@ func (m *Mediafile) SetVideoCodec(v string) {
 
 func (m *Mediafile) SetVframes(v int) {
 	m.vframes = v
+}
+
+func (m *Mediafile) SetVsync(val string) {
+	m.vsync = val
 }
 
 func (m *Mediafile) SetFrameRate(v int) {
@@ -260,10 +264,6 @@ func (m *Mediafile) SetOutputPipeWriter(w *io.PipeWriter) {
 
 func (m *Mediafile) SetMovFlags(val string) {
 	m.movFlags = val
-}
-
-func (m *Mediafile) SetVsync(val string) {
-	m.vsync = val
 }
 
 func (m *Mediafile) SetHideBanner(val bool) {
@@ -405,6 +405,10 @@ func (m *Mediafile) Vframes() int {
 	return m.vframes
 }
 
+func (m *Mediafile) Vsync() string {
+	return m.vsync
+}
+
 func (m *Mediafile) FrameRate() int {
 	return m.frameRate
 }
@@ -541,10 +545,6 @@ func (m *Mediafile) MovFlags() string {
 	return m.movFlags
 }
 
-func (m *Mediafile) Vsync() string {
-	return m.vsync
-}
-
 func (m *Mediafile) HideBanner() bool {
 	return m.hideBanner
 }
@@ -658,6 +658,7 @@ func (m *Mediafile) ToStrCommand() []string {
 		"AudioRate",
 		"VideoCodec",
 		"Vframes",
+		"Vsync",
 		"VideoBitRate",
 		"VideoBitRateTolerance",
 		"VideoMaxBitRate",
@@ -703,7 +704,6 @@ func (m *Mediafile) ToStrCommand() []string {
 		"OutputPath",
 		"Bframe",
 		"MovFlags",
-		"Vsync",
 	}
 
 	for _, name := range opts {
@@ -823,7 +823,7 @@ func (m *Mediafile) ObtainVframes() []string {
 
 func (m *Mediafile) ObtainVsync() []string {
 	if m.vsync != "" {
-		return []string{"-vsync", fmt.Sprintf("%s", m.vframes)}
+		return []string{"-vsync", fmt.Sprintf("%s", m.vsync)}
 	}
 	return nil
 }
