@@ -1,4 +1,4 @@
-module github.com/cameraiq/goffmpeg
+module github.com/xfrr/goffmpeg
 
 go 1.14
 
